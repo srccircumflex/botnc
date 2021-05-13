@@ -1,8 +1,8 @@
 # botnc
-This framework is writen for a correlation between regular expressions and Filesystem-managing. 
+This framework is writen for a correlation between regular expressions and filesystem-managing. 
 
 The basic idea; to indicate any file (including the associated path) in a System, to manipulate them in addition, and
-summarize in a valid command-string. For a simple description: writing a mass-renamer in python. In fact; the result is 
+summarize in a valid command-string. For a simple description: mass-renamer written in python. In fact; the result is 
 a dynamic module to select, bulk and manipulate file-paths; to use it in own syntax for command-line-program's of the 
 operating system. 
 
@@ -11,24 +11,24 @@ operating system.
 
 Script: 'botnc.py', line 3.
 
-(Maybe extent $PATH and $PYTHONPATH)
+([extent $PATH and $PYTHONPATH])
 
 ****
 **Usage**
 
-There are three methods to execute the Script:
+There are three methods to execute the script:
 
 1. in Terminal with(out) args to run the cli without auto-completion
 2. in python-shell for auto-completion-support
 3. as one-line-command.
 
-@1: root; regular-expression-rules for collecting and selecting; to follow-links (...by derogation of default), 
-needs to be specified by script-args.
+@1: root; regular-expression-rules for collecting and selecting; to follow-links, 
+needs to be specified by script-args (by derogation of default).
 
-@2: regular-expression-rules for collecting and selecting (...by derogation of default), needs to be specified by 
-overwriting the variables in 'botnc_main/default_kw_args'
+@2: regular-expression-rules for collecting and selecting, needs to be specified by 
+overwriting the variables in 'botnc_main/default_kw_args'.
 
-@1&2: any instance has his own help-page
+_each cli-instance has its own help-page_
 ****
 **How it bulks**
 
@@ -40,11 +40,11 @@ If the Selected will not preserved, so the key will forked to:
 `§KEY`: representing a list of maps; `§KEY.<num>`: represents one map;
  `§KEY.<num>.p`: represents the `<num>`-path; `§KEY.<num>.f`: represents the `<num>`-files.
 
-If the Selected will preserved, so the basic `§KEY` hold the basic-content and preserved Augmentation, to perform the
-command-form like: '/basic/path/to/files.txt /preserved/path/to/files.preserved'. Additional, for separate usages, the
-key-palette will be extended to `§KEY.<num>.a`, `§KEY.<num>.a.p`, `§KEY.<num>.a.f`.
+If the Selected will preserved, so the basic `§KEY` hold the basic-content and the preserved augmentation, to perform the
+command-form like: '/basic/path/to/files.txt /preserved/path/to/files.preserved'. For separate use, the
+key-palette is extended by `§KEY.<num>.a`, `§KEY.<num>.a.p` and `§KEY.<num>.a.f`.
 
-Usage-methode 3 supports theoretic the same structure, but because the evaluation of the numbers can be difficult;
+Usage-methode 3 supports theoretically the same structure, but because the evaluation of the numbers can be difficult;
 this methode supports the `.n` to represent all `<nums>`.
 ****
 **How it performs**
@@ -58,10 +58,10 @@ backup-process with a dated logfile.
 _see botnc-manual-page for more about the botnc-syntax_
 
 **Notes**
-1. The Parser do not append a space at any path-specifications
-2. every file saved in a key, startswith slash '/'
-3. ... every path saved in a key, do not endswith slash '/'
-4. the bash-home-char '~' will not be escaped
+1. No spaces are appended to path-specifications
+2. each file stored in a key, startswith slash '/'
+3. ... every path stored in a key, doesn't endswith slash '/'
+4. '~' will not escaped
 ****
 _This script is writen on and for Linux. Not tested on Windows_
 
