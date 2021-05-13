@@ -61,7 +61,7 @@ _see botnc-manual-page for more about the botnc-syntax_
 1. The Parser do not append a space at any path-specifications
 2. every file saved in a key, startswith slash '/'
 3. ... every path saved in a key, do not endswith slash '/'
-4. the bash-home-char '~' will be not escape
+4. the bash-home-char '~' will not be escape
 ****
 _This script is writen on and for Linux. Not tested on Windows_
 
