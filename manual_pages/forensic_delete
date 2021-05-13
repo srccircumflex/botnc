@@ -1,0 +1,13 @@
+
+ _*_
+ select
+ <num> ... &| <num - num>
+ to delete
+
+
+ _key-words_
+ undo       reset current key-content to basic
+ confirmed  confirm the current structure
+
+ _SIGNALS_
+ ^C:    Interrupt forensic-del-cli

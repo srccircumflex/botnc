@@ -1,0 +1,15 @@
+
+ _key-words_
+ preserve       run regular-expression-cli
+ continue       confirm current collection, go to botnc-table
+ #              following interpreted as key for select content
+
+ _select-content_
+ all            select all
+ <num> ...      select number('s)
+ <num> - <num>  select number-range
+ <num> <num> <num> - <num> <num> - <num> <num>
+
+ _SIGNALS_
+ ^C:    Interrupt current loop-iteration
+ ^D:    EOF, go to botnc-table

@@ -1,0 +1,24 @@
+
+ _key-words_
+ autoclean [<key('s)>]   clean identity pairs in augmented maps
+ forensic [<key('s)>]    start forensic-del-cli
+ inspect [<key('s)>]     print current contents
+
+ # <botnc-cmd>
+    _possible key's_
+    §key         ;
+    §key.<num>   ;   §key.<num>.a
+    §key.<num>.f ;   §key.<num>.a.f
+    §key.<num>.p ;   §key.<num>.a.p
+
+    _special chars_ (stand alone)
+    \s      space-char
+    \S      delete previous space
+    \f      delete start-slash in previous files
+            (only effective after a '*.f' - key)
+    §       start and end for a string who needs to be escaped
+    §§      ″ ... and mkdir('s)
+
+ _SIGNALS_
+ ^C:    Interrupt current loop-iteration
+ ^D:    EOF, exit

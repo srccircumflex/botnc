@@ -1,0 +1,101 @@
+
+ --top -t               followed by root-point definition
+ --follow-links -l      turn on, to follow links
+
+ --map-p-rex            regular-expression-rule for path, to collect map
+ --map-f-rex            regular-expression-rule for files, to collect map
+ --map-p-reference-off  turn off the reference of first match on path-rule
+ --map-or-operand       enable the or-operand for collecting-rules. default is 'and'
+ --map-rex-i-off        disable the ignore-case, for map-collect-instance
+
+ --collect-f-rex        regular-expression-rule for file selecting
+ --collect-f-rex-i-off  disable the ignore-case, for file-collect-instance
+ --collect-empty-too    enable to collect empty file-lists after selecting
+
+ --preserve-p-rex       regular expression in path to preserve ...
+ --preserve-p-repl      ... replacement
+ --preserve-p-sec-rex   second-expression** in path
+ --preserve-p-at-rex    expression for requesting boolean-match in files
+ --preserve-p-at-sec-rex    second-expression*
+ --preserve-f-rex       regular expression in files to preserve ...
+ --preserve-f-repl      ... replacement
+ --preserve-f-sec-rex   second-expression** in file
+ --preserve-f-at-rex    expression for requesting boolean-match in path
+ --preserve-f-at-sec-rex    second-expression*
+ * if '…-sec-rex' arguments given, the first rex will applied in result of sec-rex.
+ ** wording like: ″ replace '-rex' to '-repl' in '-sec-rex' ″
+
+ --key-for-table-entry -k followed by dict-key. Scip the manual-preserve-instance
+ --c-command -c         followed by the botnc-command***
+ --c-inspect-test -v    just print the result of collect- and preserve-instances ...
+ --c-inspect-test-all   ... empty file-lists too.
+ --c-clean-off          disable the auto-clean-function
+
+ -h                     print options
+ --help                 print this page
+ --help-json            print json syntax
+ --help-c               print help about command-syntax***
+##########################################################################################
+ (--top, -t)(--follow-links, -l)
+ --map-p-rex --map-f-rex --map-p-reference-off --map-or-operand --map-rex-i-off
+ --collect-f-rex --collect-f-rex-i-off --collect-empty-too
+ --preserve-p-rex --preserve-p-repl --preserve-p-sec-rex
+ --preserve-p-at-rex --reserve-p-at-sec-rex
+ --preserve-f-rex --preserve-f-repl --preserve-f-sec-rex
+ --preserve-f-at-rex --reserve-f-at-sec-rex
+ (--map-json, -M) (--collect-json, -C) (--preserve-json, -P) (--main-json, -m)
+ (--key-for-table-entry, -k)
+ (--c-command, -c) (--c-inspect-test, -v) --c-inspect-test-all --c-clean-off
+ -h --help --help-json --help-c
+##########################################################################################
+ --map-json -M "+" +{                   default: -> botnc_main/default_kw_args.py
+ 0: <'path-rex'>,
+ 1: <'file-rex'>,
+ [<'use_match_reference': <0|1>,>]      set to enable reference in path or file('s)
+ [<'operand': 'or',>]                   set to enable or-operand
+ [<'ignore': False>]                    set to disable re.IGNORECASE
+ }
+
+ --collect-json -C "+" +{               default: -> botnc_main/default_kw_args.py
+ 1: <'rex'>,
+ [<'ignore': False,>]                   set to disable re.IGNORECASE
+ [<'empty_too': True>]                  set to enable return map's with a empty list
+ }
+
+ --preserve-json -P "+" +{              default: -> botnc_main/default_kw_args.py
+ [<0: ***,>]
+ [<1: ***>]
+ }
+ ***
+ ['rex', 'repl']* | ['rex', 'repl', 'sec-rex']* |
+ [*, ['at-rex']] | [*, ['at-rex', 'at-sec-rex']]
+
+ --main-json -m "+" +{                  {-- all - in - one --}
+ [<'map_kwargs': <map-json>,>]
+ [<'collect_kwargs': <collect-json>,>]
+ [<'preserve_kwargs': <preserve-json>>]
+ }
+
+ key: int = 0 = path/dir
+ key: int = 1 = file('s)
+##########################################################################################
+ _possible key's_
+    §§§             represents any, including augments
+    §§§.n           represents the file-path's
+    §§§.n.a         represents the augment part of file-path's
+    §§§.n.f         represents the file's only
+    §§§.n.a.f       represents the augmented part
+    §§§.n.p         represents the path('s) only
+    §§§.n.a.p       represents the augment part
+
+ _special chars_ (stand alone)
+    §          start and end of an string who needs to be escaped
+    §§         ″ ... and mkdir('s)
+    \s         space
+    \S         delete previous space
+    \f         delete start-slash in previous files
+               (only effective after a '*.f' - key)
+
+ _examples_
+ -c 'echo §§§ \S § suffix! 2 § >> §§ ~/botnc/[cache] §§ /$(date).txt'
+ -c 'cp -v §§§.n §§ DIR §§ §§§.n.a.f >> ~/file.log'

@@ -1,0 +1,39 @@
+
+        _hub_
+ first line shows the keywords in association with the current value
+ second line shows the syntax-symbols between the '
+    ('rex_bulk_begin'rex_separator'rex_bulk_end'done')
+ arrow in left upper corner shows the state
+
+        _keywords_
+ rex     : regular expression for actual state
+             can be 2D to 3D
+ @       : second expression
+             in file state: check truth in path
+             in path state: check truth in files
+             can be 1D to 2D
+ syntax  : followed by new syntax definition
+             Separated by actual separator (2)
+ help
+
+        _expressions_
+ rex
+     2D: [expression, replacement]
+     3D: [expression, replacement, expression]
+            (replace a to b in c)
+ @
+     1D: [expression]
+     2D: [expression, expression]
+            (if a in b)
+
+        _syntax_(symbols mutable)
+ 'rex<expr~repl>'       ' #'[key]
+ 'rex<expr~repl~expr>'  'syntax~begin~sep~end~done~'
+ '@<expr>'
+ '@<expr~expr>'
+
+        _examples_
+match all (and no replace)  : <~> (<~~>)
+pre_folder_prefix           : </~/prefix~/*[^/]*.$>
+append_suffix               : <$~suffix>
+replace_suffix              : <\.end$~.new_end>
