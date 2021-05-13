@@ -36,11 +36,11 @@ In cli-instances "collect" and "preserve", it is possible to set a KEY direct af
 collected content for later use.
 Requested otherwise. This KEY will formated and additional forked.
 
-If the Selected will not preserved, so the key will forked to:
+If the selected will not preserved, so the key will forked to:
 `§KEY`: representing a list of maps; `§KEY.<num>`: represents one map;
  `§KEY.<num>.p`: represents the `<num>`-path; `§KEY.<num>.f`: represents the `<num>`-files.
 
-If the Selected will preserved, so the basic `§KEY` hold the basic-content and the preserved augmentation, to perform the
+If the selected will preserved, so the basic `§KEY` hold the basic-content and the preserved augmentation, to perform the
 command-form like: '/basic/path/to/files.txt /preserved/path/to/files.preserved'. For separate use, the
 key-palette is extended by `§KEY.<num>.a`, `§KEY.<num>.a.p` and `§KEY.<num>.a.f`.
 
