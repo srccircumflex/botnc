@@ -3,26 +3,24 @@
 script_path: str = "...."  #
 
 import sys
+
 if sys.platform in ('win32', 'cygwin'): SLASH: str = '\\'
 else: SLASH: str = '/'
 
 if script_path.endswith(SLASH): script_path = script_path[:-len(SLASH)]
 sys.path.append(script_path)
+
 from manual_pages import manuals
-manuals.path = script_path
-manuals.SLASH = SLASH
-
 from botnc_lib import Builder, Interfaces
-Builder.SLASH = SLASH
-Interfaces.SLASH = SLASH
-from botnc_main import default_kw_args
-default_kw_args.SLASH = SLASH
-
+from botnc_main import default_kw_args, cli_env, run_cmd
 from ast import literal_eval
 from getopt import getopt, GetoptError
-from sys import argv
-from botnc_main import default_kw_args, cli_env, run_cmd
-from manual_pages.manuals import BOTNC_MAIN
+
+manuals.path = script_path
+manuals.SLASH = SLASH
+Builder.SLASH = SLASH
+Interfaces.SLASH = SLASH
+default_kw_args.SLASH = SLASH
 
 short_opts:str = "t:lM:C:P:m:k:c:vh"
 
@@ -78,7 +76,7 @@ def read_opt():
     global preserve_json, command_count
 
     try:
-        opts, args = getopt(argv[1:], short_opts, long_opts)
+        opts, args = getopt(sys.argv[1:], short_opts, long_opts)
     except GetoptError as e:
         exit(f"{e}\n{short_opts}\n{long_opts}")
 
@@ -110,7 +108,7 @@ def read_opt():
         elif opt in ('--c-inspect-test', '-v'): test_rex_result = True; command_count = True
         elif opt == '--c-inspect-test-all': verbose_test = True; command_count = True
         elif opt == '--c-clean-off': cmd_autoclean = False; command_count = True
-        elif opt in ('-h', '--help', '--help-json', '--help-c'): BOTNC_MAIN(opt)
+        elif opt in ('-h', '--help', '--help-json', '--help-c'): manuals.BOTNC_MAIN(opt)
 
 
 def main():
