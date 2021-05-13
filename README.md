@@ -64,3 +64,6 @@ _see botnc-manual-page for more about the botnc-syntax_
 4. the bash-home-char '~' will be not escape
 ****
 _This script is writen on and for Linux. Not tested on Windows_
+
+
+![botnc_ex1](https://user-images.githubusercontent.com/84026287/118094811-85d71680-b3cf-11eb-949c-db40a9b0aef0.png)
