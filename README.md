@@ -67,7 +67,6 @@ _This script is writen on and for Linux. Not tested on Windows_
 
 ****
 
-![botnc_ex1](https://user-images.githubusercontent.com/84026287/118094811-85d71680-b3cf-11eb-949c-db40a9b0aef0.png)
-
-![botnc_ex2](https://user-images.githubusercontent.com/84026287/118095142-039b2200-b3d0-11eb-83e9-00bde6546080.png)
+![botnc_ex1](https://user-images.githubusercontent.com/84026287/118095854-e1ee6a80-b3d0-11eb-8c04-b8067b217d04.png)
+![botnc_ex2](https://user-images.githubusercontent.com/84026287/118095865-e6b31e80-b3d0-11eb-914f-a8a515df6800.png)
 
