@@ -12,9 +12,18 @@
              in file state: check truth in path
              in path state: check truth in files
              can be 1D to 2D
+ gob     : get on buffer
  syntax  : followed by new syntax definition
-             Separated by actual separator (2)
+             starting, separated and ending by current Separator (2)
  help
+
+        _gob_
+ edit content of current state on buffer in iteration
+ when combined with rex: rex-modifications are processed firs
+ to collect the gob-modified content:
+    current state must be confirmed immediately
+    otherwise the gob-modifications will be reset
+ the iteration can be interrupted by ^C, modifications are retained
 
         _expressions_
  rex
@@ -29,7 +38,7 @@
         _syntax_(symbols mutable)
  'rex<expr~repl>'       ' #'[key]
  'rex<expr~repl~expr>'  'syntax~begin~sep~end~done~'
- '@<expr>'
+ '@<expr>'              'gob<'
  '@<expr~expr>'
 
         _examples_
@@ -37,3 +46,6 @@ match all (and no replace)  : <~> (<~~>)
 pre_folder_prefix           : </~/prefix~/*[^/]*.$>
 append_suffix               : <$~suffix>
 replace_suffix              : <\.end$~.new_end>
+
+rex<expr~repl~expr~>@<expr~expr>gob< #key
+syntax~start~sep~end~done~
