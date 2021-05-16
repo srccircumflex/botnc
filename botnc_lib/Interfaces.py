@@ -7,7 +7,7 @@ from cli_modules.cli_stdout import print_2D_map_list, gen_cli_table_ln, print_cl
 from cli_modules.ln_autocompl import pair_completer
 from botnc_lib.Builder import mk_rex_walk_map, edit_d, rex_manipulate
 from manual_pages.manuals import CLI_COLLECT, GEN_EXPR_CLI, FORENSIC_DELETE
-from cli_modules.cli_stdin import input_opts_x_nums
+from cli_modules.cli_stdin import input_opts_x_nums, edit_buffer
 
 SLASH: str = '/'
 
@@ -54,11 +54,10 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
 
     def init_pair_completer():
 
-        nonlocal expr_bulk_start, expr_bulk_sep, expr_bulk_end, done_opt, rex_opt, at_opt, syntax_opt
-
-        base_opts:list = [[syntax_opt, 'help'], []]
-        prep_rex:list = [[rex_opt, at_opt], [
-            done_opt,
+        nonlocal expr_bulk_start, expr_bulk_sep, expr_bulk_end, done_opt, rex_opt, at_opt, syntax_opt, gob_opt
+        base_opts: list = [[syntax_opt, 'help', gob_opt], []]
+        prep_rex: list = [[rex_opt, at_opt], [
+            done_opt, gob_opt,
             # some useful reminders
             expr_bulk_start + expr_bulk_sep + expr_bulk_sep + expr_bulk_end,
             f'{expr_bulk_start}{SLASH}{expr_bulk_sep}{SLASH}···', f'{expr_bulk_sep}{SLASH}*[^{SLASH}]*.${expr_bulk_end}',
@@ -67,24 +66,26 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
 
         pair_completer(base_opts, prep_rex, selection=False, delims=' \t\n`~!#$%^&*()-=+[{]}\\|;:\'",<>/?')
 
-    expr_bulk_start:str = '<'
-    expr_bulk_sep:str = '~'
-    expr_bulk_end:str = '>'
-    done_opt:str = ' #'
-    rex_opt:str = f'rex{expr_bulk_start}'
-    at_opt:str = f'@{expr_bulk_start}'
-    syntax_opt:str = 'syntax'
+    expr_bulk_start: str = '<'
+    expr_bulk_sep: str = '~'
+    expr_bulk_end: str = '>'
+    done_opt: str = ' #'
+    rex_opt: str = f'rex{expr_bulk_start}'
+    at_opt: str = f'@{expr_bulk_start}'
+    syntax_opt: str = 'syntax'
+    gob_opt: str = f'gob{expr_bulk_start}'
 
     init_pair_completer()
 
-    cli_loop:bool = True
-    cli_loopT1:bool = False
-    key:str = None
-    warning:str = ""
+    cli_loop: bool = True
+    cli_loop_i1: bool = False
+    key: str = None
+    warning: str = ""
 
     while True:
+        gob: bool = False
 
-        pre_args:str = f"{rex_args}{second_reference}{cli_loop}{cli_loopT1}"
+        pre_args:str = f"{rex_args}{second_reference}{cli_loop}{cli_loop_i1}{gob}"
         opt:str = input(f"{warning}\n[{rex_opt}]:{rex_args};[{at_opt}]:{second_reference}\n"
                         f"'{expr_bulk_start}''{expr_bulk_sep}''{expr_bulk_end}''{done_opt}' ")
         warning:str = ""
@@ -101,7 +102,7 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
             second_reference = opt.split(at_opt)[-1].split(expr_bulk_end)[0].split(expr_bulk_sep)
         if done_opt in opt:
             done_i_i = opt.index(done_opt)
-            cli_loop, cli_loopT1 = ((False, False) if len(opt[:done_i_i+1]) == len(done_opt) else (True, True))
+            cli_loop, cli_loop_i1 = ((False, False) if opt.startswith(done_opt) else (True, True))
             if not opt.endswith(done_opt):
                 key_ = opt[done_i_i+len(done_opt):]
                 continue_ = False
@@ -112,6 +113,8 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
                             continue_ = True; break
                 if continue_: continue
                 else: key = key_
+        if gob_opt in opt:
+            gob = True
         if opt.startswith(syntax_opt):
             try:
                 opt_split = opt.split(expr_bulk_sep)
@@ -123,10 +126,10 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
         elif opt == 'help' or opt == 'h' or opt == "Help" or opt == 'info' or opt == 'i' or opt == 'Info':
             print(GEN_EXPR_CLI(), file=stdout)
             continue
-        elif f"{rex_args}{second_reference}{cli_loop}{cli_loopT1}" == pre_args:
+        elif f"{rex_args}{second_reference}{cli_loop}{cli_loop_i1}{gob}" == pre_args:
             warning = " [WARNING] nothing modified; may use 'help'"
 
-        yield rex_args, second_reference, cli_loop, cli_loopT1, key
+        yield rex_args, second_reference, cli_loop, cli_loop_i1, key, gob
 
 
 def augment_walk_map(_walk_map:list, kwargs:dict, key:str=None, out_d:dict={}, cli:bool=True,
@@ -134,22 +137,27 @@ def augment_walk_map(_walk_map:list, kwargs:dict, key:str=None, out_d:dict={}, c
 
     def map_association_augment(_map:list) -> list:
         nonlocal kwargs, key, cli
-        map_:list = deepcopy(_map)
-        _map:list = deepcopy(_map)
-        kwarg_ks:list = (list(kwargs) if list(kwargs) in ([1], [0], [1, 0], [0, 1]) else
-                         exit(" [[ERR] key err in prep_walk_map: ('1D' &| '2D')]"))
+        map_: list = deepcopy(_map)
+        _map: list = deepcopy(_map)
+        kwarg_ks: list = (list(kwargs) if list(kwargs) in ([1], [0], [1, 0], [0, 1]) else
+                          exit(f" [[ERR] key err in augment_walk_map: (0 &|| 1)]\n{kwargs}"))
         for k in kwarg_ks:
-            rex_args:list = (kwargs[k][0] if type(kwargs[k][0]) == list else kwargs[k])
-            second_reference:list = (kwargs[k][1] if type(kwargs[k][1]) == list else None)
+            if type(kwargs[k]) == bool:
+                rex_args: list = ['', '']
+                second_reference = None
+            else:
+                rex_args: list = (kwargs[k][0] if type(kwargs[k][0]) == list else kwargs[k])
+                second_reference: list = (kwargs[k][1] if type(kwargs[k][1]) == list else None)
 
             if cli: cli_gen = gen_expr_cli(rex_args, second_reference, slash_safe_mode=(False if k == 1
                                                                                                else True),
                                            forbid_chars_after_sharp=[' ', '.', '§'])
-            cli_gate:bool = True
-            cli_T1:bool = False
-            first_loop:bool = True
+            cli_gate: bool = True
+            cli_i1: bool = False
+            first_loop: bool = True
+            gob: bool = False
             while cli_gate:
-                cli_:bool = (False if cli_T1 else cli)
+                cli_:bool = (False if cli_i1 else cli)
                 for n in range(len(_map)):
                     if k == 0:
                         target_sigh = "→"
@@ -157,6 +165,8 @@ def augment_walk_map(_walk_map:list, kwargs:dict, key:str=None, out_d:dict={}, c
                         map_[n][0] = rex_manipulate(map_[n][0], rex_args, ([i for i in second_reference] + [_map[n][1]]
                                                                            if second_reference else None),
                                                     slash_safe_mode=(True if first_loop else False))[0]
+                        if gob: map_[n][0] = edit_buffer([map_[n][0]])[0]
+
                     elif k == 1:
                         target_sigh = "↓"
                         map_[n][1] = deepcopy(_map[n][1])
@@ -164,11 +174,13 @@ def augment_walk_map(_walk_map:list, kwargs:dict, key:str=None, out_d:dict={}, c
                                                                            + [[_map[n][0]]]
                                                                            if second_reference else None),
                                                     slash_safe_mode=False)
+                        if gob: map_[n][1] = edit_buffer(map_[n][1])
+
                     if cli_: print_2D_map_list([[_map[n][0], map_[n][1]]],
                                                sub_hl=f"\n  [ {map_[n][0]} ]", begin_hl=f'\n {target_sigh}  ')
                 if not cli_: cli_gate = False
-                else: rex_args, second_reference, cli_gate, cli_T1, key_ = next(cli_gen); key = (key_ if not key
-                                                                                                 else key)
+                else: rex_args, second_reference, cli_gate, cli_i1, key_, gob = next(cli_gen); key = (key_ if not key
+                                                                                                      else key)
                 if first_loop: first_loop = False
 
         for n in range(len(_map)): _map[n] += map_[n]
