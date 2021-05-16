@@ -18,12 +18,12 @@
  help
 
         _gob_
- edit content of current state on buffer in iteration
+ edit content of current state on stdin buffer in iteration
  when combined with rex: rex-modifications are processed firs
  to collect the gob-modified content:
-    current state must be confirmed immediately
+    current state must be confirmed immediately afterwards
     otherwise the gob-modifications will be reset
- the iteration can be interrupted by ^C, modifications are retained
+ the iteration can be interrupted by ^C, modifications contained
 
         _expressions_
  rex
