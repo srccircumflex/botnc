@@ -67,7 +67,7 @@ _This script is writen on and for Linux. Not tested on Windows_
 
 ****
 **_Updates_**
-16.05.21: fixes; patches; involved "gob" (get on buffer) - option in preserve instance, to get and edit contents on stdin buffer
+16.05.21: fixes; patches; involved "gob" (get on buffer) - option, to get and edit contents on stdin buffer
 
 ****
 
