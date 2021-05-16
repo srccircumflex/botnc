@@ -86,7 +86,7 @@ def gen_expr_cli(rex_args:list, second_reference:list=None, slash_safe_mode:bool
         gob: bool = False
 
         pre_args:str = f"{rex_args}{second_reference}{cli_loop}{cli_loop_i1}{gob}"
-        opt:str = input(f"{warning}\n[{rex_opt}]:{rex_args};[{at_opt}]:{second_reference}\n"
+        opt:str = input(f"{warning}\n[{rex_opt}]:{rex_args};[{at_opt}]:{second_reference};[{gob_opt}]\n"
                         f"'{expr_bulk_start}''{expr_bulk_sep}''{expr_bulk_end}''{done_opt}' ")
         warning:str = ""
 
