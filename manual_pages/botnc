@@ -22,8 +22,12 @@
  --preserve-f-sec-rex   second-expression** in file
  --preserve-f-at-rex    expression for requesting boolean-match in path
  --preserve-f-at-sec-rex    second-expression*
+ --enable-p-preserve    enable preserve-cli for path('s) without arguments
+ --enable-f-preserve    enable preserve-cli for files without arguments
+
  * if '…-sec-rex' arguments given, the first rex will applied in result of sec-rex.
  ** wording like: ″ replace '-rex' to '-repl' in '-sec-rex' ″
+
 
  --key-for-table-entry -k followed by dict-key. Scip the manual-preserve-instance
  --c-command -c         followed by the botnc-command***
@@ -67,9 +71,10 @@
  [<1: ***>]
  }
  ***
- ['rex', 'repl']* | ['rex', 'repl', 'sec-rex']* |
- [*, ['at-rex']] | [*, ['at-rex', 'at-sec-rex']]
-
+ ['rex', 'repl']* || ['rex', 'repl', 'sec-rex']* ||
+ [*, ['at-rex']] || [*, ['at-rex', 'at-sec-rex']] ||
+ boolean
+ 
  --main-json -m "+" +{                  {-- all - in - one --}
  [<'map_kwargs': <map-json>,>]
  [<'collect_kwargs': <collect-json>,>]
