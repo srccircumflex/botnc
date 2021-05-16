@@ -1,6 +1,9 @@
 from cli_modules.ln_autocompl import completer_init, pair_completer
 from copy import deepcopy
 from sys import stdout
+from threading import Thread
+from readline import insert_text, redisplay
+from time import sleep
 
 
 def input_opts_x_nums(opts_d:dict, max_n:int, cli_hub:bool=True, forbid_chars_after_sharp:list=None) -> tuple:
@@ -114,3 +117,23 @@ def input_stand_alone_x_args(opts_d:dict, stand_alone_x_args:list, cli_hub:bool=
             if len(splt_inp) < 1: warning = f" [[ERR] no input count]"; continue
             warning = f" [[ERR] no match for '{splt_inp[0]}']"; continue
         return opts_d
+
+
+def edit_buffer(content: list):
+                        
+    def buffer_insert(s: str):
+        sleep(0.3)
+        insert_text(s)
+        redisplay()
+
+    try:
+        for n, c in enumerate(content):
+            t = Thread(target=buffer_insert, kwargs={'s': c})
+            t.start()
+            i = input('>')
+            print('\x1b[1A\x1b[2K\x1b[1A' + '\b' * len(i), file=stdout, flush=True)
+            content[n] = i
+    except KeyboardInterrupt:
+        print('^C', file=stdout)
+
+    return content
