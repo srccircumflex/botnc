@@ -30,6 +30,7 @@ long_opts:list = ['top=', 'follow-links',
                   'preserve-p-rex=', 'preserve-p-repl=', 'preserve-p-sec-rex=', 'preserve-p-at-rex=',
                   'preserve-p-at-sec-rex=', 'preserve-f-rex=', 'preserve-f-repl=', 'preserve-f-sec-rex=',
                   'preserve-f-at-rex=', 'preserve-f-at-sec-rex=',
+                  'enable-p-preserve', 'enable-f-preserve'
                   'map-json=', 'collect-json=', 'preserve-json=', 'main-json=',
                   'key-for-table-entry=',
                   'c-command=', 'c-inspect-test', 'c-inspect-test-all', 'c-clean-off',
@@ -64,12 +65,13 @@ def read_opt():
             if 'collect_kwargs' in arg_json: default_kw_args.collect_f_kwargs = arg_json['collect_kwargs']
             if 'preserve_kwargs' in arg_json: preserve_json = arg_json['preserve_kwargs']
 
-    def mk_preserve_json(key:str, arg_:str, index_:list):
+    def mk_preserve_json(key:int, arg_:str, index_:list):
 
         global preserve_json
 
         if preserve_json is None: preserve_json = {}
-        if key not in preserve_json: preserve_json[key] = [['', '', ''],['', '']]
+        if key not in preserve_json: preserve_json[key] = [['', ''],['']]
+        if len(preserve_json[key][index_[0]]) < index_[1] + 1: preserve_json[key][index_[0]].append(' ')
         preserve_json[key][index_[0]][index_[1]] = arg_
 
     global walkers_top, follow_links, botnc_cmd, table_entry, cmd_autoclean, test_rex_result, verbose_test
@@ -91,16 +93,18 @@ def read_opt():
         elif opt == '--collect-f-rex': default_kw_args.collect_f_kwargs[1] = arg
         elif opt == '--collect-f-rex-i-off': default_kw_args.collect_f_kwargs['ignore'] = False
         elif opt == '--collect-empty-too': default_kw_args.collect_f_kwargs['empty_too'] = True
-        elif opt == '--preserve-p-rex': mk_preserve_json('2D', arg, [0, 0])
-        elif opt == '--preserve-p-repl': mk_preserve_json('2D', arg, [0, 1])
-        elif opt == '--preserve-p-sec-rex': mk_preserve_json('2D', arg, [0, 2])
-        elif opt == '--preserve-p-at-rex': mk_preserve_json('2D', arg, [1, 0])
-        elif opt == '--preserve-p-at-sec-rex': mk_preserve_json('2D', arg, [1, 1])
-        elif opt == '--preserve-f-rex': mk_preserve_json('1D', arg, [0, 0])
-        elif opt == '--preserve-f-repl': mk_preserve_json('1D', arg, [0, 1])
-        elif opt == '--preserve-f-sec-rex': mk_preserve_json('1D', arg, [0, 2])
-        elif opt == '--preserve-f-at-rex': mk_preserve_json('1D', arg, [1, 0])
-        elif opt == '--preserve-f-at-sec-rex': mk_preserve_json('1D', arg, [1, 1])
+        elif opt == '--preserve-p-rex': mk_preserve_json(0, arg, [0, 0])
+        elif opt == '--preserve-p-repl': mk_preserve_json(0, arg, [0, 1])
+        elif opt == '--preserve-p-sec-rex': mk_preserve_json(0, arg, [0, 2])
+        elif opt == '--preserve-p-at-rex': mk_preserve_json(0, arg, [1, 0])
+        elif opt == '--preserve-p-at-sec-rex': mk_preserve_json(0, arg, [1, 1])
+        elif opt == '--preserve-f-rex': mk_preserve_json(1, arg, [0, 0])
+        elif opt == '--preserve-f-repl': mk_preserve_json(1, arg, [0, 1])
+        elif opt == '--preserve-f-sec-rex': mk_preserve_json(1, arg, [0, 2])
+        elif opt == '--preserve-f-at-rex': mk_preserve_json(1, arg, [1, 0])
+        elif opt == '--preserve-f-at-sec-rex': mk_preserve_json(1, arg, [1, 1])
+        elif opt == '--enable-p-preserve': mk_preserve_json(0, '', [1, 0])
+        elif opt == '--enable-f-preserve': mk_preserve_json(1, '', [1, 0])
         elif opt in ('--map-json', '--collect-json', '--preserve-json', '--main-json',
                      '-M', '-C', '-P', '-m'): json_parse(opt, arg)
         elif opt in ('--key-for-table-entry', '-k'): table_entry = arg
