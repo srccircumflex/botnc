@@ -1,5 +1,5 @@
 # botnc
-This framework is writen for a correlation between regular expressions and filesystem-managing. 
+This script is writen for a correlation between regular expressions and filesystem-managing. 
 
 The basic idea; to indicate any file (including the associated path) in a System, to manipulate them in addition, and
 summarize in a valid command-string. For a simple description: mass-renamer written in python. In fact; the result is 
@@ -64,6 +64,10 @@ _see botnc-manual-page for more about the botnc-syntax_
 4. '~' will not escaped
 ****
 _This script is writen on and for Linux. Not tested on Windows_
+
+****
+**_Updates_**
+16.05.21: fixes; patches; involved "gob" (get on buffer) - option in preserve instance, to get and edit contents on stdin buffer
 
 ****
 
