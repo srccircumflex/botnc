@@ -80,7 +80,7 @@ def read_opt():
     try:
         opts, args = getopt(sys.argv[1:], short_opts, long_opts)
     except GetoptError as e:
-        exit(f"{e}\n\n{short_opts}\n{long_opts}")
+        exit(f"\n [[ERR] {e}]\n -h\t\t:list commands\n--help\t\t:print help-page\n--help-json\t:about json-syntax\n--help-c\t:about command-syntax\n")
 
     for opt, arg in opts:
         if opt in ('--top', '-t'): walkers_top = arg
