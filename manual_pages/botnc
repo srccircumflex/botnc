@@ -44,9 +44,9 @@
  --map-p-rex --map-f-rex --map-p-reference-off --map-or-operand --map-rex-i-off
  --collect-f-rex --collect-f-rex-i-off --collect-empty-too
  --preserve-p-rex --preserve-p-repl --preserve-p-sec-rex
- --preserve-p-at-rex --reserve-p-at-sec-rex
+ --preserve-p-at-rex --reserve-p-at-sec-rex --enable-p-preserve
  --preserve-f-rex --preserve-f-repl --preserve-f-sec-rex
- --preserve-f-at-rex --reserve-f-at-sec-rex
+ --preserve-f-at-rex --reserve-f-at-sec-rex --enable-f-preserve
  (--map-json, -M) (--collect-json, -C) (--preserve-json, -P) (--main-json, -m)
  (--key-for-table-entry, -k)
  (--c-command, -c) (--c-inspect-test, -v) --c-inspect-test-all --c-clean-off
