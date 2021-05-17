@@ -30,7 +30,7 @@ long_opts:list = ['top=', 'follow-links',
                   'preserve-p-rex=', 'preserve-p-repl=', 'preserve-p-sec-rex=', 'preserve-p-at-rex=',
                   'preserve-p-at-sec-rex=', 'preserve-f-rex=', 'preserve-f-repl=', 'preserve-f-sec-rex=',
                   'preserve-f-at-rex=', 'preserve-f-at-sec-rex=',
-                  'enable-p-preserve', 'enable-f-preserve'
+                  'enable-p-preserve', 'enable-f-preserve',
                   'map-json=', 'collect-json=', 'preserve-json=', 'main-json=',
                   'key-for-table-entry=',
                   'c-command=', 'c-inspect-test', 'c-inspect-test-all', 'c-clean-off',
@@ -80,7 +80,7 @@ def read_opt():
     try:
         opts, args = getopt(sys.argv[1:], short_opts, long_opts)
     except GetoptError as e:
-        exit(f"{e}\n{short_opts}\n{long_opts}")
+        exit(f"{e}\n\n{short_opts}\n{long_opts}")
 
     for opt, arg in opts:
         if opt in ('--top', '-t'): walkers_top = arg
