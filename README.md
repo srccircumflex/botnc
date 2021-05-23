@@ -63,7 +63,7 @@ _see botnc-manual-page for more about the botnc-syntax_
 3. ... every path stored in a key, doesn't endswith slash '/'
 4. '~' will not escaped
 ****
-_This script is writen on and for Linux. Not tested on Windows_
+_This script is writen on and for Linux. Not tested on Windows. Status: Experimental_
 
 ****
 **_Updates_**
