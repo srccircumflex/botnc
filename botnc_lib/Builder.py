@@ -170,7 +170,8 @@ def mk_rex_walk_map(walk_gen, collect_map_kwargs:dict, collect_f_kwargs:dict=Non
                         if not search(collect_f_kwargs[k], f): walk_map[k][n] = 0
                     while 0 in walk_map[k]: walk_map[k].remove(0)
             if not empty_too and list() in walk_map: continue
-            if (operand == 'and' and op_gate) or (operand != 'and' and op_gate in (0,1)):
+            if (operand == 'and' and op_gate) or (operand != 'and' and op_gate in (0,1))\
+                    or (empty_too and list() in walk_map and op_gate is not None):
                 map_.append([walk_map[0][0],walk_map[1]])
                 if enum_stdout:
                     enum += 1; print(f"{enum}\t:{walk_map[0][0]}", file=stdout)
