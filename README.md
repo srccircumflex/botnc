@@ -1,4 +1,7 @@
 # botnc
+
+![build](https://img.shields.io/badge/build-failed-red)
+
 This script is writen for a correlation between regular expressions and filesystem-managing. 
 
 The basic idea; to indicate any file (including the associated path) in a System, to manipulate them in addition, and
