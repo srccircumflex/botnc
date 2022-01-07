@@ -1,6 +1,7 @@
 # botnc
 
 ![build](https://img.shields.io/badge/build-failed-red)
+![GitHub last commit](https://img.shields.io/github/last-commit/srccircumflex/botnc)
 
 This script is writen for a correlation between regular expressions and filesystem-managing. 
 
